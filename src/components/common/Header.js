@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
 import {Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink} from "reactstrap";
+import toastr from 'toastr';
 import {Auth} from "../../api/auth";
 
 class Header extends Component {
@@ -21,6 +22,7 @@ class Header extends Component {
 
     logout() {
         Auth.logout();
+        toastr.success('You were successfully logged out.');
     }
 
     render() {

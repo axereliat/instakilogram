@@ -10,4 +10,11 @@ export class Requester {
             password
         });
     }
+
+    static signIn(username, password) {
+        return axios.post(baseUrl + 'users/login', {
+            username,
+            password
+        });
+    }
 }

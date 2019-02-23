@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Requester} from "../../api/requester";
 import toastr from 'toastr';
+import {Auth} from "../../api/auth";
 
 class Register extends Component {
 
@@ -10,7 +11,6 @@ class Register extends Component {
         this.state = {
             username: '',
             password: '',
-            confirmPassword: '',
             loading: false
         };
 
@@ -28,29 +28,30 @@ class Register extends Component {
             return;
         }
 
-        if (this.state.password !== this.state.confirmPassword) {
-            toastr.error('Passwords do not match.');
-            return;
-        }
-
         this.setState({loading: true});
 
-        Requester.signUp(this.state.username, this.state.password)
-            .then(() => {
+        Requester.signIn(this.state.username, this.state.password)
+            .then(res => {
                 this.setState({loading: false});
-                toastr.success('You were successfully registered.');
-                this.props.history.push('/login');
+                Auth.saveData({
+                    token: res.data.token,
+                    userId: res.data.userId,
+                    username: res.data.username,
+                    isAdmin: res.data.roles.includes('ADMIN')
+                });
+                toastr.success('You were successfully logged in.');
+                this.props.history.push('/');
             })
             .catch(err => {
                 this.setState({loading: false});
-                toastr.error(err.response.data.error);
+                toastr.error(err.response.data.message);
             })
     };
 
     render() {
         return (
             <div className="jumbotron">
-                <h1 className="text-center">Sign up</h1>
+                <h1 className="text-center">Sign in</h1>
                 <form onSubmit={this.handleSubmit}>
                     <div className="form-group">
                         <label htmlFor="username" className="control-label">Username</label>
@@ -60,7 +61,6 @@ class Register extends Component {
                                name="username"
                                placeholder="Username..."
                                onChange={this.handleChange}
-                               disabled={this.state.loading}
                         />
                     </div>
                     <div className="form-group">
@@ -73,20 +73,10 @@ class Register extends Component {
                                onChange={this.handleChange}
                         />
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="confirmPassword" className="control-label">Confirm Password</label>
-                        <input type="password"
-                               className="form-control"
-                               id="confirmPassword"
-                               name="confirmPassword"
-                               placeholder="Confirm Password..."
-                               onChange={this.handleChange}
-                        />
-                    </div>
                     <button type="submit"
                             className="btn btn-primary"
                             disabled={this.state.loading}
-                    >{this.state.loading ? 'Please wait...' : 'Sign up'}</button>
+                    >{this.state.loading ? 'Please wait...' : 'Sign in'}</button>
                 </form>
             </div>
         );

@@ -5,6 +5,7 @@ import NotFound from "./components/errors/NotFound";
 import axios from 'axios';
 import {Auth} from "./api/auth";
 import Register from "./components/auth/Register";
+import Login from "./components/auth/Login";
 const Routes = () => {
     if (Auth.getToken()) {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + Auth.getToken();
@@ -12,6 +13,7 @@ const Routes = () => {
     return <Switch>
         <Route exact path='/' component={Home}/>
         <Route path='/register' component={Register}/>
+        <Route path='/login' component={Login}/>
         <Route component={NotFound}/>
     </Switch>
 };
