@@ -4,10 +4,9 @@ const baseUrl = 'http://localhost:8000/';
 
 export class Requester {
 
-    static signUp(username, password) {
-        return axios.post(baseUrl + 'users/register', {
-            username,
-            password
+    static signUp(formData) {
+        return axios.post(baseUrl + 'users/register', formData, {
+            headers: {'Content-Type': 'multipart/form-data'}
         });
     }
 

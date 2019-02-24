@@ -11,20 +11,25 @@ class Register extends Component {
             username: '',
             password: '',
             confirmPassword: '',
+            image: null,
             loading: false
         };
 
     }
 
     handleChange = e => {
-        this.setState({[e.target.name]: e.target.value});
+        if (e.target.type === 'file') {
+            this.setState({[e.target.name]: e.target.files[0]});
+        } else {
+            this.setState({[e.target.name]: e.target.value});
+        }
     };
 
     handleSubmit = e => {
         e.preventDefault();
 
         if (!this.state.username || !this.state.password) {
-            toastr.error('All fields are required.');
+            toastr.error('Please fill in the required fields.');
             return;
         }
 
@@ -33,9 +38,14 @@ class Register extends Component {
             return;
         }
 
+        const formData = new FormData();
+        formData.append('image', this.state.image);
+        formData.append('username', this.state.username);
+        formData.append('password', this.state.password);
+
         this.setState({loading: true});
 
-        Requester.signUp(this.state.username, this.state.password)
+        Requester.signUp(formData)
             .then(() => {
                 this.setState({loading: false});
                 toastr.success('You were successfully registered.');
@@ -82,6 +92,12 @@ class Register extends Component {
                                placeholder="Confirm Password..."
                                onChange={this.handleChange}
                         />
+                    </div>
+                    <div className="input-group">
+                        <div className="custom-file">
+                            <input type="file" className="custom-file-input" id="image" name="image" onChange={this.handleChange} />
+                            <label className="custom-file-label" htmlFor="image">Choose profile picture</label>
+                        </div>
                     </div>
                     <button type="submit"
                             className="btn btn-primary"

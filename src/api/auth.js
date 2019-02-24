@@ -11,7 +11,7 @@ export class Auth {
     }
 
     static isAdmin() {
-        return localStorage.getItem('isAdmin') !== null;
+        return localStorage.getItem('isAdmin') === 'true';
     }
 
     static getUsername() {
