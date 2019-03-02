@@ -16,4 +16,10 @@ export class Requester {
             password
         });
     }
+
+    static createPost(formData) {
+        return axios.post(baseUrl + 'posts', formData, {
+            headers: {'Content-Type': 'multipart/form-data'}
+        });
+    }
 }

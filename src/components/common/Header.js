@@ -55,7 +55,12 @@ class Header extends Component {
                             ) : null}
                             {Auth.isLoggedIn() ? (
                                 <NavItem>
-                                    <Link to="/profile" className="nav-link"><FontAwesomeIcon icon="user"/>{Auth.getUsername()}</Link>
+                                    <Link to="/posts/create" className="nav-link"><FontAwesomeIcon icon="plus"/> Add post</Link>
+                                </NavItem>
+                            ) : null}
+                            {Auth.isLoggedIn() ? (
+                                <NavItem>
+                                    <Link to="/profile" className="nav-link"><FontAwesomeIcon icon="user"/> {Auth.getUsername()}</Link>
                                 </NavItem>
                             ) : null}
                             {Auth.isAdmin() ? (
