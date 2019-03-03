@@ -22,4 +22,8 @@ export class Requester {
             headers: {'Content-Type': 'multipart/form-data'}
         });
     }
+
+    static fetchUsers(search) {
+        return axios.get(baseUrl + 'users/all?search=' + search);
+    }
 }

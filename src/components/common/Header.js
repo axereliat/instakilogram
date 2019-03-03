@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Link} from "react-router-dom";
-import {Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink} from "reactstrap";
+import {Collapse, Nav, Navbar, NavbarBrand, NavbarToggler, NavItem} from "reactstrap";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import toastr from 'toastr';
 import {Auth} from "../../api/auth";
@@ -50,7 +50,7 @@ class Header extends Component {
                             ) : null}
                             {Auth.isLoggedIn() ? (
                                 <NavItem>
-                                    <Link to="/cars/sell" className="nav-link">Sell car</Link>
+                                    <Link to="/findFriends" className="nav-link"><FontAwesomeIcon icon="user-friends"/> Find friends</Link>
                                 </NavItem>
                             ) : null}
                             {Auth.isLoggedIn() ? (
