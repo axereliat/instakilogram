@@ -9,6 +9,7 @@ import Login from "./components/auth/Login";
 import {PrivateRoute} from "./PrivateRoute";
 import Create from "./components/posts/Create";
 import FindFriends from "./components/users/FindFriends";
+import Profile from "./components/users/Profile";
 const Routes = () => {
     if (Auth.getToken()) {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + Auth.getToken();
@@ -17,6 +18,7 @@ const Routes = () => {
         <Route exact path='/' component={Home}/>
         <Route path='/register' component={Register}/>
         <Route path='/login' component={Login}/>
+        <Route path='/profile/:id' component={Profile}/>
         <PrivateRoute path='/posts/create' component={Create}/>
         <PrivateRoute path='/findFriends' component={FindFriends}/>
         <Route component={NotFound}/>

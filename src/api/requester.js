@@ -26,4 +26,8 @@ export class Requester {
     static fetchUsers(search) {
         return axios.get(baseUrl + 'users/all?search=' + search);
     }
+
+    static fetchUserProfile(userId) {
+        return axios.get(baseUrl + 'users/profile/' + userId);
+    }
 }

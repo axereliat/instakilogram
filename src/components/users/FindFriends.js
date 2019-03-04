@@ -4,6 +4,7 @@ import toastr from 'toastr';
 import {Link} from "react-router-dom";
 import {Auth} from "../../api/auth";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import UsersList from "./UsersList";
 
 class FindFriends extends Component {
 
@@ -69,14 +70,7 @@ class FindFriends extends Component {
                     <button className="btn btn-primary" type="submit">Search</button>
                 </form>
                 {this.state.loading ? <FontAwesomeIcon icon="spinner" size="5x" spin /> :
-                    <ul className="list-group">
-                        {this.state.users.filter(user => user._id !== Auth.getUserId()).map(user => (
-                            <li className="list-group-item">
-                                <img src={user.profilePicture} width="10%" className="img-fluid" alt="profile picture"/>
-                                <Link to={"/profile/" + user._id}>{user.username}</Link>
-                            </li>
-                        ))}
-                    </ul>
+                    <UsersList users={this.state.users} />
                 }
             </div>
         );

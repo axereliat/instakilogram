@@ -36,7 +36,7 @@ class Header extends Component {
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
                             <NavItem>
-                                <Link to="/" className="nav-link">Home</Link>
+                                <Link to="/" className="nav-link"><FontAwesomeIcon icon="home"/> Home</Link>
                             </NavItem>
                             {!Auth.isLoggedIn() ?
                                 <NavItem>
@@ -60,17 +60,17 @@ class Header extends Component {
                             ) : null}
                             {Auth.isLoggedIn() ? (
                                 <NavItem>
-                                    <Link to="/profile" className="nav-link"><FontAwesomeIcon icon="user"/> {Auth.getUsername()}</Link>
+                                    <Link to={"/profile/" + Auth.getUserId()} className="nav-link"><FontAwesomeIcon icon="user"/> {Auth.getUsername()}</Link>
                                 </NavItem>
                             ) : null}
                             {Auth.isAdmin() ? (
                                 <NavItem>
-                                    <Link to="/admin/users" className="nav-link">Manage Users</Link>
+                                    <Link to="/admin/users" className="nav-link"><FontAwesomeIcon icon="user-edit"/> Manage Users</Link>
                                 </NavItem>
                             ) : null}
                             {Auth.isLoggedIn() ? (
                                 <NavItem>
-                                    <Link to="/login" onClick={this.logout} className="nav-link">Sign out</Link>
+                                    <Link to="/login" onClick={this.logout} className="nav-link"><FontAwesomeIcon icon="sign-out-alt"/> Sign out</Link>
                                 </NavItem>
                             ) : null}
                         </Nav>

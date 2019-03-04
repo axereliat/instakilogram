@@ -7,7 +7,15 @@ import { faUser } from '@fortawesome/free-solid-svg-icons'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import { faUserFriends } from '@fortawesome/free-solid-svg-icons'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { faBackward } from '@fortawesome/free-solid-svg-icons'
+import { faHome } from '@fortawesome/free-solid-svg-icons'
+import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+import { faUserEdit } from '@fortawesome/free-solid-svg-icons'
 
+library.add(faUserEdit);
+library.add(faSignOutAlt);
+library.add(faHome);
+library.add(faBackward);
 library.add(faUser);
 library.add(faPlus);
 library.add(faUserFriends);

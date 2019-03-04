@@ -9,7 +9,7 @@ class Create extends Component {
 
         this.state = {
             description: '',
-            images: null,
+            images: [],
             loading: false
         };
 
@@ -27,7 +27,10 @@ class Create extends Component {
         e.preventDefault();
 
         const formData = new FormData();
-        formData.append('images', this.state.images);
+        for (const image of this.state.images) {
+            formData.append('images', image);
+        }
+
         formData.append('description', this.state.description);
 
         this.setState({loading: true});
