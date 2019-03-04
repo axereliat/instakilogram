@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import * as serviceWorker from './serviceWorker';
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
 import '../node_modules/toastr/build/toastr.css';
+import "../node_modules/react-image-gallery/styles/css/image-gallery.css";
 import {BrowserRouter} from "react-router-dom";
 import App from './App';
 
