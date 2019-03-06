@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Button, Modal, ModalBody, ModalFooter, ModalHeader} from "reactstrap";
+import {Modal, ModalBody, ModalHeader} from "reactstrap";
 import ImageGallery from "react-image-gallery";
 
 class PostModal extends Component {

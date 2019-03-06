@@ -30,4 +30,8 @@ export class Requester {
     static fetchUserProfile(userId) {
         return axios.get(baseUrl + 'users/profile/' + userId);
     }
+
+    static followOrUnfollow(userId) {
+        return axios.post(baseUrl + 'users/followOrUnfollow/' + userId);
+    }
 }

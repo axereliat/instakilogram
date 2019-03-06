@@ -4,6 +4,7 @@ import toastr from "toastr";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import PostsList from "../posts/PostsList";
 import {Link} from "react-router-dom";
+import {Auth} from "../../api/auth";
 
 class Profile extends Component {
 
@@ -12,7 +13,9 @@ class Profile extends Component {
 
         this.state = {
             user: null,
-            loading: false
+            followingUser: false,
+            loading: false,
+            followingLoading: false
         };
     }
 
@@ -20,7 +23,7 @@ class Profile extends Component {
         this.setState({loading: true});
         Requester.fetchUserProfile(this.props.match.params.id)
             .then(res => {
-                this.setState({loading: false, user: res.data});
+                this.setState({loading: false, user: res.data, following: res.data.followers.includes(Auth.getUserId())});
                 console.log(res.data);
             })
             .catch(err => {
@@ -30,6 +33,28 @@ class Profile extends Component {
             })
     }
 
+    followOrUnfollow = () => {
+        this.setState({followingLoading: true});
+        Requester.followOrUnfollow(this.state.user._id)
+            .then(res => {
+                const newUser = this.state.user;
+                if (res.data.message === 'followed') {
+                    newUser.followers.push('something');
+                } else {
+                    newUser.followers.splice(0, 1);
+                }
+                this.setState({
+                    followingLoading: false,
+                    following: res.data.message === 'followed',
+                    user: newUser
+                });
+            })
+            .catch(err => {
+                this.setState({followingLoading: false});
+                console.log(err.response);
+                toastr.error('Something went wrong.');
+            })
+    };
 
     render() {
         if (!this.state.user) {
@@ -50,6 +75,20 @@ class Profile extends Component {
                                 <img src={this.state.user.profilePicture} width="20%" className="rounded-circle"
                                      alt="profile picture"/>
                                 <strong>{this.state.user.username}</strong>
+                                {' '}
+                                {this.state.user._id !== Auth.getUserId() ?
+                                    !this.state.following ?
+                                        <button className="btn btn-primary"
+                                                onClick={this.followOrUnfollow}
+                                                disabled={this.state.followingLoading}>
+                                            {this.state.followingLoading ? 'Please wait...' : 'Follow'}
+                                        </button>
+                                        : <button className="btn btn-secondary"
+                                                  onClick={this.followOrUnfollow}
+                                                  disabled={this.state.followingLoading}>
+                                            {this.state.followingLoading ? 'Please wait...' : 'Unfollow'}
+                                        </button>
+                                    : null}
                             </div>
                             <div className="col-md-6">
                                 <h3>Followers: {this.state.user.followers.length} Following: {this.state.user.following.length}</h3>
