@@ -57,7 +57,7 @@ class Profile extends Component {
     };
 
     render() {
-        if (!this.state.user) {
+        if (!this.state.user && !this.state.loading) {
             return (
                 <div className="jumbotron">
                     <h1>User not found.</h1>
@@ -95,6 +95,7 @@ class Profile extends Component {
                             </div>
                         </div>
                         <br/>
+                        {this.state.user.posts.length === 0 ? <h3>No posts yet.</h3> : null}
                         <PostsList posts={this.state.user.posts} />
                     </div>
                 }

@@ -34,4 +34,12 @@ export class Requester {
     static followOrUnfollow(userId) {
         return axios.post(baseUrl + 'users/followOrUnfollow/' + userId);
     }
+
+    static adminEditUser(userId, username) {
+        return axios.post(baseUrl + 'admin/users/' + userId, {username});
+    }
+
+    static adminDeleteUser(userId) {
+        return axios.delete(baseUrl + 'admin/users/' + userId);
+    }
 }
