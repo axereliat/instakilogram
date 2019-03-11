@@ -4,6 +4,7 @@ import PostModal from "../posts/PostModal";
 import {Link} from "react-router-dom";
 import {Requester} from "../../api/requester";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {Auth} from "../../api/auth";
 
 class Home extends Component {
 
@@ -19,16 +20,18 @@ class Home extends Component {
     }
 
     componentDidMount() {
-        this.setState({loading: true});
-        Requester.fetchNewsFeed()
-            .then(res => {
-                this.setState({posts: res.data, loading: false});
-            })
-            .catch(err => {
-                console.log(err);
-                toastr.error('Something went wrong.');
-                this.setState({loading: false});
-            })
+        if (Auth.isLoggedIn()) {
+            this.setState({loading: true});
+            Requester.fetchNewsFeed()
+                .then(res => {
+                    this.setState({posts: res.data, loading: false});
+                })
+                .catch(err => {
+                    console.log(err);
+                    toastr.error('Something went wrong.');
+                    this.setState({loading: false});
+                })
+        }
     }
 
     toggle = () => {
@@ -43,6 +46,14 @@ class Home extends Component {
     };
 
     render() {
+        if (!Auth.isLoggedIn()) {
+            return (
+                <div className="jumbotron">
+                    <h3>Welcome to Instakilogram :)</h3>
+                    <h4><Link to="/login">Log in</Link> if you have an account or <Link to="/register">register</Link> if you don't</h4>
+                </div>
+            );
+        }
         return (
             <div className="jumbotron">
                 {this.state.loading ? <FontAwesomeIcon icon="spinner" size="5x" spin /> : null}
