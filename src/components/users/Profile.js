@@ -95,8 +95,10 @@ class Profile extends Component {
                             </div>
                         </div>
                         <br/>
-                        {this.state.user.posts.length === 0 ? <h3>No posts yet.</h3> : null}
-                        <PostsList posts={this.state.user.posts} />
+                        {this.state.user.posts.length === 0 ?
+                            <h3>No posts yet.</h3> :
+                            <PostsList posts={this.state.user.posts} />
+                        }
                     </div>
                 }
             </div>

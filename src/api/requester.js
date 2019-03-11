@@ -42,4 +42,8 @@ export class Requester {
     static adminDeleteUser(userId) {
         return axios.delete(baseUrl + 'admin/users/' + userId);
     }
+
+    static fetchNewsFeed() {
+        return axios.get(baseUrl + 'posts/newsfeed');
+    }
 }
