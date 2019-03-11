@@ -8,3 +8,5 @@ Instakilogram is an Instagram clone made with React and Node
 #### Admin credentials:
 > - username: mario
 > - password: 123
+
+## NOTE: The requests to the RESTful api, deployed on Heroku, may be slow at the beginning.
