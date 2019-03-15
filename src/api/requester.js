@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-// const baseUrl = 'http://localhost:8000/';
-const baseUrl = 'https://instakilogram-rest.herokuapp.com/';
+const baseUrl = 'http://localhost:8000/';
+// const baseUrl = 'https://instakilogram-rest.herokuapp.com/';
 
 export class Requester {
 
@@ -47,4 +47,13 @@ export class Requester {
     static fetchNewsFeed() {
         return axios.get(baseUrl + 'posts/newsfeed');
     }
+
+    static deletePost(postId) {
+        return axios.delete(baseUrl + 'posts/' + postId);
+    }
+
+    static likePost(postId) {
+        return axios.post(baseUrl + 'posts/like/' + postId);
+    }
 }
+

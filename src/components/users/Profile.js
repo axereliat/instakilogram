@@ -56,6 +56,21 @@ class Profile extends Component {
             })
     };
 
+    deletePost = postId => {
+        Requester.deletePost(postId)
+            .then(() => {
+                const newUser = this.state.user;
+                newUser.posts = newUser.posts.filter(p => p._id !== postId);
+                this.setState({
+                    user: newUser
+                });
+            })
+            .catch(err => {
+                console.log(err.response.data);
+                toastr.error('Something went wrong.');
+            })
+    }
+
     render() {
         if (!this.state.user && !this.state.loading) {
             return (
@@ -97,7 +112,7 @@ class Profile extends Component {
                         <br/>
                         {this.state.user.posts.length === 0 ?
                             <h3>No posts yet.</h3> :
-                            <PostsList posts={this.state.user.posts} />
+                            <PostsList posts={this.state.user.posts} deletePost={this.deletePost} />
                         }
                     </div>
                 }

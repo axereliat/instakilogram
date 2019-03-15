@@ -11,7 +11,11 @@ import { faBackward } from '@fortawesome/free-solid-svg-icons'
 import { faHome } from '@fortawesome/free-solid-svg-icons'
 import { faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 import { faUserEdit } from '@fortawesome/free-solid-svg-icons'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faHeart } from '@fortawesome/free-solid-svg-icons'
 
+library.add(faHeart);
+library.add(faTrash);
 library.add(faUserEdit);
 library.add(faSignOutAlt);
 library.add(faHome);

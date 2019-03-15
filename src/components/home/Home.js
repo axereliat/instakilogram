@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import {Requester} from "../../api/requester";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {Auth} from "../../api/auth";
+import {parseAjaxError} from "../../api/utils";
 
 class Home extends Component {
 
@@ -45,6 +46,34 @@ class Home extends Component {
         this.setState({selectedPost: post});
     };
 
+    likePost = postId => {
+        Requester.likePost(postId)
+            .then(res => {
+                this.setState({
+                    posts: this.state.posts.map(p => {
+                        if (p._id === postId) {
+                            if (res.data.message === 'liked') {
+                                p.likes.push(Auth.getUserId());
+                            } else {
+                                p.likes = p.likes.filter(l => l !== Auth.getUserId());
+                            }
+                        }
+                        return p;
+                    })
+                }, () => {
+                    if (res.data.message === 'liked') {
+                        toastr.success('You successfully liked the post.');
+                    } else {
+                        toastr.success('You successfully unliked the post.');
+                    }
+                })
+            })
+            .catch(err => {
+                console.log(err.response);
+                toastr.error(parseAjaxError(err));
+            })
+    };
+
     render() {
         if (!Auth.isLoggedIn()) {
             return (
@@ -68,6 +97,12 @@ class Home extends Component {
                                     <Link to={'/profile/' + post.author._id}>{post.author.username}</Link>
                                     <a href="#"><img src={post.photos[0]} alt="picture" width="80%"
                                                      onClick={() => this.selectPost(post)}/></a>
+                                    <br/>
+                                    <button className="btn" onClick={() => this.likePost(post._id)}>
+                                        <FontAwesomeIcon icon="heart"
+                                                         size={post.likes.includes(Auth.getUserId()) ? '4x' : '3x'}
+                                                         color={post.likes.includes(Auth.getUserId()) ? 'pink' : 'grey'} />
+                                    </button>
                                 </div>
                             ))}
                         </div>
