@@ -15,6 +15,7 @@ class PostModal extends Component {
 
         this.state = {
             comment: '',
+            loading: false
         };
     }
 
@@ -25,16 +26,30 @@ class PostModal extends Component {
     postComment = e => {
         e.preventDefault();
 
-        Requester.postComment(this.props.post._id, this.state.comment)
-            .then(res => {
-                const comment = res.data.comment;
+        this.setState({loading: true}, () => {
+            Requester.postComment(this.props.post._id, this.state.comment)
+                .then(res => {
+                    const comment = res.data.comment;
 
-                this.setState({
-                    comment: ''
-                }, () => {
-                    this.props.addCommentToPost(comment, this.props.post._id);
-                    toastr.success('Your comment was successfully posted :)');
+                    this.setState({
+                        comment: '',
+                        loading: false
+                    }, () => {
+                        this.props.addCommentToPost(comment, this.props.post._id);
+                        toastr.success('Your comment was successfully posted :)');
+                    })
                 })
+                .catch(err => {
+                    toastr.error(parseAjaxError(err));
+                })
+        });
+    };
+
+    deleteComment = id => {
+        Requester.deleteComment(this.props.post._id, id)
+            .then(() => {
+                this.props.removeCommentFromPost(this.props.post._id, id);
+                toastr.success('Your comment was deleted.');
             })
             .catch(err => {
                 toastr.error(parseAjaxError(err));
@@ -73,9 +88,13 @@ class PostModal extends Component {
                                   onChange={this.handleChange}
                                   value={this.state.comment}>
                         </textarea>
-                        <button className="btn btn-primary" type="submit">Submit</button>
+                        <button className="btn btn-primary"
+                                disabled={this.state.loading}
+                                type="submit">
+                            {!this.state.loading ? 'Submit' : 'Please wait...'}
+                        </button>
                     </form>
-                    <CommentsList comments={post.comments} />
+                    <CommentsList comments={post.comments} deleteComment={this.deleteComment}/>
                 </ModalBody>
             </Modal>
         );

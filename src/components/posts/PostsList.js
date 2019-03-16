@@ -30,7 +30,8 @@ class PostsList extends React.Component {
                            isOpen={this.state.modal}
                            post={this.state.selectedPost}
                            deletePost={this.props.deletePost}
-                           addCommentToPost={this.props.addCommentToPost} />
+                           addCommentToPost={this.props.addCommentToPost}
+                           removeCommentFromPost={this.props.removeCommentFromPost}/>
                 <div className="row">
                     {this.props.posts.map(post => (
                         <div className="col-md-4" key={post._id}>

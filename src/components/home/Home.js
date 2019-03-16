@@ -23,8 +23,19 @@ class Home extends Component {
     addCommentToPost = (comment, postId) => {
         const posts = this.state.posts.map(p => {
             if (p._id === postId) {
-                console.log(comment);
                 p.comments.splice(0, 0, comment);
+            }
+            return p;
+        });
+        this.setState({
+            posts
+        });
+    };
+
+    removeCommentFromPost = (postId, commentId) => {
+        const posts = this.state.posts.map(p => {
+            if (p._id === postId) {
+                p.comments = p.comments.filter(c => c._id !== commentId);
             }
             return p;
         });
@@ -105,7 +116,8 @@ class Home extends Component {
                         <PostModal toggle={this.toggle}
                                    isOpen={this.state.modal}
                                    post={this.state.selectedPost}
-                                   addCommentToPost={this.addCommentToPost}/>
+                                   addCommentToPost={this.addCommentToPost}
+                                   removeCommentFromPost={this.removeCommentFromPost}/>
                         <div className="row">
                             {this.state.posts.map(post => (
                                 <div className="col-md-4" key={post._id}>

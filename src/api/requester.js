@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const baseUrl = 'http://localhost:8000/';
-// const baseUrl = 'https://instakilogram-rest.herokuapp.com/';
+// const baseUrl = 'http://localhost:8000/';
+const baseUrl = 'https://instakilogram-rest.herokuapp.com/';
 
 export class Requester {
 
@@ -60,6 +60,10 @@ export class Requester {
         return axios.post(baseUrl + 'posts/comment/' + postId, {
             content
         });
+    }
+
+    static deleteComment(postId, commentId) {
+        return axios.delete(baseUrl + `posts/${postId}/comment/${commentId}`);
     }
 }
 

@@ -78,8 +78,18 @@ class Profile extends Component {
             }
             return p;
         });
+
         this.setState({
-            posts
+            user: {...this.state.user, posts}
+        });
+    };
+
+    removeCommentFromPost = (postId, commentId) => {
+        const posts = this.state.user.posts.map(p => {
+            if (p._id === postId) {
+                p.comments = p.comments.filter(c => c._id !== commentId);
+            }
+            return p;
         });
 
         this.setState({
@@ -128,7 +138,10 @@ class Profile extends Component {
                         <br/>
                         {this.state.user.posts.length === 0 ?
                             <h3>No posts yet.</h3> :
-                            <PostsList posts={this.state.user.posts} deletePost={this.deletePost} addCommentToPost={this.addCommentToPost} />
+                            <PostsList posts={this.state.user.posts}
+                                       deletePost={this.deletePost}
+                                       addCommentToPost={this.addCommentToPost}
+                                       removeCommentFromPost={this.removeCommentFromPost} />
                         }
                     </div>
                 }
