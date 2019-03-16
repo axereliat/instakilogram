@@ -69,7 +69,23 @@ class Profile extends Component {
                 console.log(err.response.data);
                 toastr.error('Something went wrong.');
             })
-    }
+    };
+
+    addCommentToPost = (comment, postId) => {
+        const posts = this.state.user.posts.map(p => {
+            if (p._id === postId) {
+                p.comments.splice(0, 0, comment);
+            }
+            return p;
+        });
+        this.setState({
+            posts
+        });
+
+        this.setState({
+            user: {...this.state.user, posts}
+        });
+    };
 
     render() {
         if (!this.state.user && !this.state.loading) {
@@ -112,7 +128,7 @@ class Profile extends Component {
                         <br/>
                         {this.state.user.posts.length === 0 ?
                             <h3>No posts yet.</h3> :
-                            <PostsList posts={this.state.user.posts} deletePost={this.deletePost} />
+                            <PostsList posts={this.state.user.posts} deletePost={this.deletePost} addCommentToPost={this.addCommentToPost} />
                         }
                     </div>
                 }

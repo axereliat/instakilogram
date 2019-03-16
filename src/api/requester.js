@@ -55,5 +55,11 @@ export class Requester {
     static likePost(postId) {
         return axios.post(baseUrl + 'posts/like/' + postId);
     }
+
+    static postComment(postId, content) {
+        return axios.post(baseUrl + 'posts/comment/' + postId, {
+            content
+        });
+    }
 }
 

@@ -26,7 +26,11 @@ class PostsList extends React.Component {
     render() {
         return (
             <div>
-                <PostModal toggle={this.toggle} isOpen={this.state.modal} post={this.state.selectedPost} deletePost={this.props.deletePost}/>
+                <PostModal toggle={this.toggle}
+                           isOpen={this.state.modal}
+                           post={this.state.selectedPost}
+                           deletePost={this.props.deletePost}
+                           addCommentToPost={this.props.addCommentToPost} />
                 <div className="row">
                     {this.props.posts.map(post => (
                         <div className="col-md-4" key={post._id}>

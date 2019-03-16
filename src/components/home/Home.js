@@ -17,8 +17,21 @@ class Home extends Component {
             modal: false,
             selectedPost: null,
             loading: false
-        }
+        };
     }
+
+    addCommentToPost = (comment, postId) => {
+        const posts = this.state.posts.map(p => {
+            if (p._id === postId) {
+                console.log(comment);
+                p.comments.splice(0, 0, comment);
+            }
+            return p;
+        });
+        this.setState({
+            posts
+        });
+    };
 
     componentDidMount() {
         if (Auth.isLoggedIn()) {
@@ -89,7 +102,10 @@ class Home extends Component {
                 {!this.state.posts.length && !this.state.loading ?
                     <h3>You are not following anyone.</h3> :
                     <div>
-                        <PostModal toggle={this.toggle} isOpen={this.state.modal} post={this.state.selectedPost}/>
+                        <PostModal toggle={this.toggle}
+                                   isOpen={this.state.modal}
+                                   post={this.state.selectedPost}
+                                   addCommentToPost={this.addCommentToPost}/>
                         <div className="row">
                             {this.state.posts.map(post => (
                                 <div className="col-md-4" key={post._id}>
