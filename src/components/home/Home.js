@@ -131,6 +131,7 @@ class Home extends Component {
                                                          size={post.likes.includes(Auth.getUserId()) ? '4x' : '3x'}
                                                          color={post.likes.includes(Auth.getUserId()) ? 'pink' : 'grey'} />
                                     </button>
+                                    <span>{post.likes.length}</span>
                                 </div>
                             ))}
                         </div>
